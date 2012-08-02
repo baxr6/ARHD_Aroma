@@ -1,0 +1,250 @@
+﻿ini_set("rom_name", "Android Revolution HD");
+ini_set("rom_version", "6.7.1 XE");
+ini_set("rom_author", "mike1986");
+ini_set("rom_device", "HTC Sensation/XE");
+
+splash(2000, "splash");
+theme("ics");
+calibrate("1.6834","18","0.9457","25");
+
+
+viewbox(
+    "Welcome",
+	"\n\n"+
+	"Proudly presenting you the most popular ROM for HTC Sensation, Sensation 4G & Sensation XE...\n"+
+	"\n\n"+
+	">>> Very fast | rock stable | stock look | great support <<<\n"+
+    "\n\n\n\n"+
+    "You're about to flash\n"+
+    ini_get("rom_name") + " by " + ini_get("rom_author") +  
+    "\n\n\n"+
+    "  Version: <#080>" + ini_get("rom_version") + "</#>\n"+
+    "  Device: <#080>" + ini_get("rom_device") + "</#>\n\n\n"+
+    "Press Next to continue the installation...",
+    "icons/info"
+);
+
+
+textbox(
+  "Changelog",
+  "ARHD 6.7.12 XE Changelog",
+  "icons/info",
+  
+  resread("changelog.txt")
+);
+
+
+agreebox(
+  "Terms Of Use",
+  "Please read the Terms of Use ...",
+  "icons/agreement",
+  readfile_aroma("agreement.txt"),
+  "I agree with this Terms Of Use...",
+  "Please check the agreement..."
+);
+
+
+selectbox(
+  "Do you want to perform a full wipe?",
+  "Please Select:",
+  "icons/apps",
+  "wipe.prop",
+  
+  "Install w/out wiping","",1,
+  "Perform a full wipe","",0
+);
+
+
+checkbox(
+  "Choose aditional mods",
+  "Please check the ones you want",
+  "icons/apps",
+  "mods.prop",
+  
+  "T-Mobile US Addons","",0,
+  "HQ Camera Mod","",0,
+  "Sony Bravia Engine","",0,
+  "Jelly Beans Animations","",0,
+  "Battery Percentage Mod & Fix","",0,
+  "Wake On Volume Mod","",0,
+  "ARHD EXT4 Tweaks","",0
+);
+
+
+selectbox(
+  "Other Mods",
+  "Please Select:",
+  "icons/apps",
+  "rosie.prop",
+  
+  "Smooth Rosie Mod","",0,
+  "Ultra Smooth Rosie Mod","",0
+);
+
+
+
+menubox(
+  "Kernel Installation Choise",
+  getvar("installmsg"),
+  "icons/install",
+  "kernel.prop",
+  
+  "Stock HTC Kernel @ 1.2Ghz",    "Install Stock kernel.", "icons/htc",
+  "Faux123 Kernel",  "", "icons/faux",
+  "SebastianFM Kernel",  "", "icons/showp",
+  "Bricked Kernel",  "Bricked Kernel 3.0-V1.4", "icons/showp"    
+);  
+
+if
+    file_getprop("/tmp/aroma-data/kernel.prop","selected") == "4"
+then
+selectbox(
+  "Do you want Sweep2wake?",
+  "Please Select:",
+  "icons/personalize",
+  "sweep.prop",
+  
+  "Yes!","See video in #1 post.",1,
+  "Yes. (no capacitive backlight)","Don't use button_backlight.",0,
+  "Nope.","Chuck Testa!",0
+);
+
+
+selectbox(
+  "Do you want ZRAM?",
+  "Please Select:",
+  "icons/personalize",
+  "zram.prop",
+  
+  "Yes!","",1,
+  "No.","",0
+);
+
+selectbox(
+  "3DGPU Overclock (may not be stable)",
+  "Please Select:",
+  "icons/personalize",
+  "3dgpu.prop",
+  
+  "3DGPU OC disabled","3D@266Mhz",1,
+  "3DGPU low overclock","3D@300Mhz",0,
+  "3DGPU high overclock","3D@320Mhz",0
+);
+
+
+selectbox(
+  "2DGPU Overclock (may not be stable)",
+  "Please Select:",
+  "icons/personalize",
+  "2dgpu.prop",
+  
+  "2DGPU OC disabled","2D@200Mhz",1,
+  "2DGPU low overclock","2D@228Mhz",0,
+  "2DGPU high overclock","2D@266Mhz",0
+);
+
+
+selectbox(
+  "Governor",
+  "default governor:",
+  "icons/personalize",
+  "gov.prop",
+  
+  "badass","default, balanced+gpu control",1,
+  "ondemand","performance on demand",0,
+  "lazy","",0,
+  "interactive","",0,
+  "lagfree","",0,
+  "conservative","",0,
+  "userspace","",0,
+  "powersave","",0,
+  "performance","always clock with max frequency",0
+);
+
+
+if
+    file_getprop("/tmp/aroma-data/gov.prop","selected.0") == "1"
+then
+selectbox(
+  "Badass configuration:",
+  "What is your focus?",
+  "icons/personalize",
+  "badass.prop",
+  
+  "Performance","You want more than this? Choose ondemand",0,
+  "Balanced","with a slight weight on performance",1,
+  "Battery efficient","badass @ default (may be choppy)",0
+);
+endif;
+
+
+selectbox(
+  "I/O Scheduler",
+  "default i/o scheduler:",
+  "icons/personalize",
+  "scheduler.prop",
+  
+  "deadline","default",0,
+  "noop","",0,
+  "cfq","",1
+);
+endif;
+
+checkbox(
+  "No Sense Script",
+  getvar("installmsg"),
+  "icons/install",
+  "nosense.prop",
+  
+  "Remove Sense Completely",    "Remove Sense.", "icons/apps"
+);  
+
+
+selectbox(
+  "Reboot after installation?",
+  "Shall I reboot after installation?",
+  "icons/personalize",
+  "reboot.prop",
+  
+  "Yes","Don't use this if you are HTCDev-Unlocked!",1,
+  "No","Stays in recovery",0
+);
+
+
+viewbox(
+  "Ready To Install",
+  "All informations has been collected for installation.\n\n"+
+  "Click Next To Start Installation...",
+  "icons/info"
+);
+
+
+install(
+  "Installing",
+  "Installing " + ini_get("rom_name") + " " + ini_get("rom_version") + 
+  "...\nPlease wait until it finished...",
+  "icons/install"
+);
+
+
+# Set Next Text fo Finish
+ini_set("text_next", "Finish");
+
+
+viewbox(
+   "Installation Completed",
+   "<#080>Congratulation...</#>\n\n"+
+   ini_get("rom_name") + " " + ini_get("rom_version") + " has been installed successfully.\n\n"+
+   "Press Finish, and Reboot your phone.\n\nEnjoy! :D",
+   "icons/info"
+);
+
+
+# Check if reboot checkbox was checked
+
+if
+    file_getprop("/tmp/aroma-data/reboot.prop","selected.0") == "1"
+then
+    run_program("/tmp/reboot.sh");
+endif;
+splash(2000, "splash");

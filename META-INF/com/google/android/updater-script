@@ -1,0 +1,673 @@
+show_progress(0.500000, 0);
+
+assert(getprop("ro.product.device") == "pyramid");
+show_progress(0.500000, 40);
+
+#[ Optional Full Wipe from the superwipe script ]#
+if
+    file_getprop("/tmp/aroma-data/wipe.prop","selected.0") == "2"
+then
+    set_progress(0.01);
+    ui_print("==============================================");
+    ui_print("|               Wiping Script                |");
+    ui_print("|  This operation will remove all your data  |");
+    ui_print("|  You have 10 seconds to remove the battery |");
+    ui_print("|          to cancel this procedure          |");
+    ui_print("==============================================");
+    ui_print("");
+    ui_print("");
+    ui_print("");
+        run_program("/sbin/sleep", "10");
+    ui_print("-> Executing Full Wipe");
+    ui_print("-> Erasing & formatting EXT4 *CACHE* partition");
+        unmount("/cache");
+        run_program("/sbin/erase_image", "cache");
+        format("ext4", "EMMC", "/dev/block/mmcblk0p24");
+        run_program("/sbin/sleep", "2");
+
+set_progress(0.02);
+    ui_print("-> Erasing & formatting EXT4 *SYSTEM* partition");
+        unmount("/system");
+        run_program("/sbin/erase_image", "system");
+        format("ext4", "EMMC", "/dev/block/mmcblk0p22");
+        run_program("/sbin/sleep", "2");
+
+set_progress(0.03);
+    ui_print("-> Erasing & formatting EXT4 *DATA* partition");
+        unmount("/data");
+        run_program("/sbin/erase_image", "userdata");
+        format("ext4", "EMMC", "/dev/block/mmcblk0p23");
+        run_program("/sbin/sleep", "2");
+
+set_progress(0.04);
+    ui_print("-> Erasing *BOOT* partition");
+        unmount("/boot");
+        run_program("/sbin/erase_image", "boot");
+        run_program("/sbin/sleep", "2");
+
+set_progress(0.05);
+    ui_print("-> Removing system files from SD Card");
+        delete_recursive("/sdcard/.android_secure");
+        delete_recursive("/sdcard/.bookmark_thumb1");
+        delete_recursive("/sdcard/.data/footprints");
+        delete_recursive("/sdcard/.data/mail");
+        delete_recursive("/sdcard/Android/data/com.android.providers.media");
+        delete_recursive("/sdcard/Android/data/com.google.android.apps.genie.geniewidget.news-content-cache");
+        delete_recursive("/sdcard/Android/data/com.google.android.apps.maps");
+        delete_recursive("/sdcard/.data/navigator/Data/Temporary");
+        delete_recursive("/sdcard/LazyList");
+        delete_recursive("/sdcard/LOST.DIR");
+        run_program("/sbin/sleep", "2");
+
+    ui_print("@>>> All partitions wiped successfully! <<<");
+
+set_progress(0.06);
+    ui_print("-> Now checking filesystems for errors");
+        run_program("/sbin/e2fsck", "-p", "/dev/block/mmcblk0p22");
+        run_program("/sbin/e2fsck", "-p", "/dev/block/mmcblk0p23");
+        run_program("/sbin/e2fsck", "-p", "/dev/block/mmcblk0p24");
+        run_program("/sbin/sleep", "5");
+    ui_print("-> Creating log file on SD card");
+        run_program("/sbin/busybox", "cp", "/tmp/recovery.log", "/sdcard/superwipe.log");
+endif;
+
+set_progress(0.07);
+show_progress(0.07, 9);
+    ui_print("-> Writing Data");
+        mount("ext4", "EMMC", "/dev/block/mmcblk0p23", "/data");
+        package_extract_dir("data", "/data");
+
+    ui_print("-> Writing sdcard apps");
+        package_extract_dir("sdcard", "/sdcard");
+
+set_progress(0.08);
+show_progress(0.7,1380);
+        format("ext4", "EMMC", "/dev/block/mmcblk0p22");
+    ui_print("-> Writing System");
+        mount("ext4", "EMMC", "/dev/block/mmcblk0p22", "/system");
+        package_extract_dir("system", "/system");
+
+set_progress(0.9);
+    ui_print("-- Setting symlinks");
+            symlink("busybox", "/system/xbin/[", "/system/xbin/[[",
+        "/system/xbin/arp", "/system/xbin/ash", "/system/xbin/awk",
+        "/system/xbin/basename", "/system/xbin/bbconfig", "/system/xbin/brctl",
+        "/system/xbin/bunzip2", "/system/xbin/bzcat", "/system/xbin/bzip2",
+        "/system/xbin/cal", "/system/xbin/cat", "/system/xbin/catv",
+        "/system/xbin/chgrp", "/system/xbin/chmod", "/system/xbin/chown",
+        "/system/xbin/chroot", "/system/xbin/cksum", "/system/xbin/clear",
+        "/system/xbin/cmp", "/system/xbin/cp", "/system/xbin/cpio",
+        "/system/xbin/cut", "/system/xbin/date", "/system/xbin/dc",
+        "/system/xbin/dd", "/system/xbin/depmod", "/system/xbin/devmem",
+        "/system/xbin/df", "/system/xbin/diff", "/system/xbin/dirname",
+        "/system/xbin/dmesg", "/system/xbin/dnsd", "/system/xbin/dos2unix",
+        "/system/xbin/du", "/system/xbin/echo", "/system/xbin/ed",
+        "/system/xbin/egrep", "/system/xbin/env", "/system/xbin/expr",
+        "/system/xbin/false", "/system/xbin/fdisk", "/system/xbin/fgrep",
+        "/system/xbin/find", "/system/xbin/fold", "/system/xbin/free",
+        "/system/xbin/freeramdisk", "/system/xbin/fuser", "/system/xbin/getopt",
+        "/system/xbin/grep", "/system/xbin/gunzip", "/system/xbin/gzip",
+        "/system/xbin/head", "/system/xbin/hexdump", "/system/xbin/id",
+        "/system/xbin/ifconfig", "/system/xbin/insmod", "/system/xbin/install",
+        "/system/xbin/ip", "/system/xbin/kill", "/system/xbin/killall",
+        "/system/xbin/killall5", "/system/xbin/length", "/system/xbin/less",
+        "/system/xbin/ln", "/system/xbin/losetup", "/system/xbin/ls",
+        "/system/xbin/lsmod", "/system/xbin/lspci", "/system/xbin/lsusb",
+        "/system/xbin/lzop", "/system/xbin/lzopcat", "/system/xbin/md5sum",
+        "/system/xbin/mkdir", "/system/xbin/mke2fs", "/system/xbin/mkfifo",
+        "/system/xbin/mkfs.ext2", "/system/xbin/mknod", "/system/xbin/mkswap",
+        "/system/xbin/mktemp", "/system/xbin/modprobe", "/system/xbin/more",
+        "/system/xbin/mount", "/system/xbin/mountpoint", "/system/xbin/mv",
+        "/system/xbin/netstat", "/system/xbin/nice", "/system/xbin/nohup",
+        "/system/xbin/nslookup", "/system/xbin/ntpd", "/system/xbin/od",
+        "/system/xbin/patch", "/system/xbin/pgrep", "/system/xbin/pidof",
+        "/system/xbin/ping", "/system/xbin/pkill", "/system/xbin/printenv",
+        "/system/xbin/printf", "/system/xbin/ps", "/system/xbin/pwd",
+        "/system/xbin/rdev", "/system/xbin/readlink", "/system/xbin/realpath",
+        "/system/xbin/renice", "/system/xbin/reset", "/system/xbin/rm",
+        "/system/xbin/rmdir", "/system/xbin/rmmod", "/system/xbin/route",
+        "/system/xbin/run-parts", "/system/xbin/sed", "/system/xbin/seq",
+        "/system/xbin/setsid", "/system/xbin/sh", "/system/xbin/sha1sum",
+        "/system/xbin/sha256sum", "/system/xbin/sha512sum",
+        "/system/xbin/sleep", "/system/xbin/sort", "/system/xbin/split",
+        "/system/xbin/stat", "/system/xbin/strings", "/system/xbin/stty",
+        "/system/xbin/swapoff", "/system/xbin/swapon", "/system/xbin/sync",
+        "/system/xbin/sysctl", "/system/xbin/tac", "/system/xbin/tail",
+        "/system/xbin/tar", "/system/xbin/tee", "/system/xbin/telnet",
+        "/system/xbin/test", "/system/xbin/tftp", "/system/xbin/time",
+        "/system/xbin/top", "/system/xbin/touch", "/system/xbin/tr",
+        "/system/xbin/traceroute", "/system/xbin/true", "/system/xbin/tty",
+        "/system/xbin/tune2fs", "/system/xbin/umount", "/system/xbin/uname",
+        "/system/xbin/uniq", "/system/xbin/unix2dos", "/system/xbin/unlzop",
+        "/system/xbin/unzip", "/system/xbin/uptime", "/system/xbin/usleep",
+        "/system/xbin/uudecode", "/system/xbin/uuencode", "/system/xbin/vi",
+        "/system/xbin/watch", "/system/xbin/wc", "/system/xbin/wget",
+        "/system/xbin/which", "/system/xbin/whoami", "/system/xbin/xargs",
+        "/system/xbin/yes",
+        "/system/xbin/zcat");
+		set_progress(0.91);
+    ui_print(">>> Creating toolbox symlinks");
+        symlink("toolbox", "/system/bin/cat");
+        symlink("toolbox", "/system/bin/chmod");
+        symlink("toolbox", "/system/bin/chown");
+        symlink("toolbox", "/system/bin/cmp");
+        symlink("toolbox", "/system/bin/date");
+        symlink("toolbox", "/system/bin/dd");
+        symlink("toolbox", "/system/bin/df");
+        symlink("toolbox", "/system/bin/dmesg");
+        symlink("toolbox", "/system/bin/getevent");
+        symlink("toolbox", "/system/bin/getprop");
+        symlink("toolbox", "/system/bin/hd");
+        symlink("toolbox", "/system/bin/id");
+        symlink("toolbox", "/system/bin/ifconfig");
+        symlink("toolbox", "/system/bin/iftop");
+        symlink("toolbox", "/system/bin/insmod");
+        symlink("toolbox", "/system/bin/ioctl");
+        symlink("toolbox", "/system/bin/ionice");
+        symlink("toolbox", "/system/bin/kill");
+        symlink("toolbox", "/system/bin/ln");
+        symlink("toolbox", "/system/bin/log");
+        symlink("toolbox", "/system/bin/ls");
+        symlink("toolbox", "/system/bin/lsmod");
+        symlink("toolbox", "/system/bin/lsof");
+        symlink("toolbox", "/system/bin/mkdir");
+        symlink("toolbox", "/system/bin/mount");
+        symlink("toolbox", "/system/bin/mv");
+        symlink("toolbox", "/system/bin/nandread");
+        symlink("toolbox", "/system/bin/netstat");
+        symlink("toolbox", "/system/bin/newfs_msdos");
+        symlink("toolbox", "/system/bin/notify");
+        symlink("toolbox", "/system/bin/printenv");
+        symlink("toolbox", "/system/bin/ps");
+        symlink("toolbox", "/system/bin/reboot");
+        symlink("toolbox", "/system/bin/renice");
+        symlink("toolbox", "/system/bin/rm");
+        symlink("toolbox", "/system/bin/rmdir");
+        symlink("toolbox", "/system/bin/rmmod");
+        symlink("toolbox", "/system/bin/route");
+        symlink("toolbox", "/system/bin/schedtop");
+        symlink("toolbox", "/system/bin/sendevent");
+        symlink("toolbox", "/system/bin/setconsole");
+        symlink("toolbox", "/system/bin/setprop");
+        symlink("toolbox", "/system/bin/sleep");
+        symlink("toolbox", "/system/bin/smd");
+        symlink("toolbox", "/system/bin/start");
+        symlink("toolbox", "/system/bin/stop");
+        symlink("toolbox", "/system/bin/sync");
+        symlink("toolbox", "/system/bin/top");
+        symlink("toolbox", "/system/bin/touch");
+        symlink("toolbox", "/system/bin/umount");
+        symlink("toolbox", "/system/bin/uptime");
+        symlink("toolbox", "/system/bin/vmstat");
+        symlink("toolbox", "/system/bin/watchprops");
+        symlink("toolbox", "/system/bin/wipe");
+
+    ui_print(">>> Creating additional symlinks");
+        symlink("/system/bin/mksh", "/system/bin/sh");
+        symlink("/system/fonts/Roboto-Regular.ttf","/system/fonts/DroidSans.ttf");
+        symlink("/system/fonts/Roboto-Bold.ttf","/system/fonts/DroidSans-Bold.ttf");
+        symlink("/factory/hdcp.keys", "/system/vendor/firmware/hdcp.keys");
+	# For OpenVPN support
+        symlink("/system/xbin/ifconfig","/system/xbin/bb/ifconfig");
+        symlink("/system/xbin/route","/system/xbin/bb/route");
+	
+set_progress(0.92);
+    ui_print(">>> Installing busybox");
+           set_perm(0, 1000, 0755, "/system/xbin/busybox");
+        run_program("/system/xbin/busybox", "--install", "-s", "/system/xbin");
+
+set_progress(0.93);
+    ui_print(">>> Setting permissions");
+        set_perm_recursive(0, 0, 0755, 0644, "/system");
+        set_perm_recursive(0, 2000, 0755, 0755, "/system/bin");
+        set_perm(0, 1000, 04750, "/system/bin/iptables");
+        set_perm(0, 3003, 02750, "/system/bin/netcfg");
+        set_perm(0, 3004, 02755, "/system/bin/ping");
+        set_perm(0, 2000, 06755, "/system/bin/reboot");
+        set_perm(0, 2000, 06750, "/system/bin/run-as");
+        set_perm(0, 1000, 04750, "/system/bin/tc");
+        set_perm(1000, 1000, 0755, "/system/bin/sysro");
+        set_perm(1000, 1000, 0755, "/system/bin/sysrw");
+        set_perm_recursive(1002, 1002, 0755, 0440, "/system/etc/bluetooth");
+        set_perm(0, 0, 0755, "/system/etc/bluetooth");
+        set_perm(0, 0, 0644, "/system/etc/bluetooth/a2dp_avrcp.conf");
+        set_perm(1000, 1000, 0640, "/system/etc/bluetooth/auto_pairing.conf");
+        set_perm(3002, 3002, 0444, "/system/etc/bluetooth/blacklist.conf");
+        set_perm(1002, 1002, 0440, "/system/etc/dbus.conf");
+        set_perm(1014, 2000, 0550, "/system/etc/dhcpcd/dhcpcd-run-hooks");
+        set_perm(0, 2000, 0550, "/system/etc/init.goldfish.sh");
+        set_perm(1000, 1000, 0555, "/system/etc/init.qcom.sdio.sh");
+        set_perm_recursive(0, 0, 0755, 0555, "/system/etc/ppp");
+        set_perm_recursive(0, 2000, 0755, 0755, "/system/etc/init.d");
+        set_perm_recursive(0, 2000, 0755, 0644, "/system/vendor");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/left_eye-y0-yi45-p0-pi45-r0-ri20.2d_n2/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/left_eye-y0-yi45-p0-pi45-rn7-ri20.2d_n2/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/left_eye-y0-yi45-p0-pi45-rp7-ri20.2d_n2/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/nose_base-y0-yi45-p0-pi45-r0-ri20.2d_n2/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/nose_base-y0-yi45-p0-pi45-rn7-ri20.2d_n2/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/nose_base-y0-yi45-p0-pi45-rp7-ri20.2d_n2/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/right_eye-y0-yi45-p0-pi45-r0-ri20.2d_n2/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/right_eye-y0-yi45-p0-pi45-rn7-ri20.2d_n2/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/multi_pose_face_landmark_detectors.3/right_eye-y0-yi45-p0-pi45-rp7-ri20.2d_n2/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/yaw_roll_face_detectors.3/head-y0-yi45-p0-pi45-r0-ri30.4a/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/yaw_roll_face_detectors.3/head-y0-yi45-p0-pi45-rn30-ri30.5/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/detection/yaw_roll_face_detectors.3/head-y0-yi45-p0-pi45-rp30-ri30.5/full_model.bin");
+        set_perm(0, 0, 0644, "/system/vendor/pittpatt/models/recognition/face.face.y0-y0-22-b-N/full_model.bin");
+        set_perm_recursive(0, 2000, 0755, 0755, "/system/xbin");
+        set_perm(0, 0, 06755, "/system/xbin/su");
+        set_perm(1000, 1000, 0755, "/system/xbin/openvpn");
+        set_perm(1000, 1000, 0771, "/data");
+        set_perm_recursive(1000, 1000, 0771, 0644, "/data/app");
+
+# Running user choose settings. 
+
+
+# Mods
+    ui_print("@...Additional Mods");
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.1") == "1"
+then
+	ui_print("-> Installing T-Mobile US Addons");
+		package_extract_dir("additions/Tmous", "/system");
+	    set_perm(0, 2000, 0755, "/system/etc/init.d/91modules");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.2") == "1"
+then
+	ui_print("-> Installing HQ Camera Mod");
+		package_extract_dir("additions/hqcamera", "/system");
+    ui_print("-> HQ Camera Mod Success.");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.3") == "1"
+then
+	ui_print("-> Installing Sony Bravia Engine");
+		package_extract_dir("additions/Bravia", "/system");
+		package_extract_file("additions/Bravia/script.sh", "/tmp/script.sh");
+        set_perm(0, 0, 0777, "/tmp/script.sh");
+        run_program("/tmp/script.sh");
+        delete("/tmp/script.sh");
+        delete("/system/script.sh");
+        set_perm(0, 0, 0755, "/system/etc/be_photo");
+	    set_perm(0, 0, 0755, "/system/etc/be_movie");
+    ui_print("-> Sony Bravia Mod Success.");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.4") == "1"
+then
+	ui_print("-> Installing Jelly Beans Animations");
+	    assert(mount("ext4", "EMMC", "/dev/block/mmcblk0p22", "/system") || ui_print("(system is mounted already)"));
+        package_extract_dir("additions/Anims/vrtheme", "/sdcard/vrtheme");
+        set_perm(0, 0, 0755, "/sdcard/vrtheme/installtheme.sh");
+        set_perm(0, 0, 0755, "/sdcard/vrtheme/zip");
+        set_perm(0, 0, 0755, "/sdcard/vrtheme/cleanup.sh");
+        set_perm(0, 0, 0755, "/sdcard/vrtheme/zipalign");
+        run_program("/sdcard/vrtheme/installtheme.sh");
+        run_program("/sdcard/vrtheme/cleanup.sh");
+        package_extract_dir("additions/Anims/system", "/system");
+    ui_print("-> JellyBean Animations Mod Success.");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.5") == "1"
+then
+	ui_print("-> Installing Battery Percentage Mod & Fix");
+        delete("/system/framework/framework-res.apk"); 
+        package_extract_dir("additions/BatteryMod/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/app", "/system/app"); 
+    ui_print("-> Battery Percentage Mod Success.");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.6") == "1"
+then
+	ui_print("-> Installing Wake on volume mod.");
+    ui_print("-> Writing file android.policy.jar to system...");
+        delete("/system/framework/android.policy.jar"); 
+		package_extract_dir("additions/WakeOnVol/system", "/system");
+    ui_print("-> Wake on volume Mod Success.");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.7") == "1"
+then
+	ui_print("-> Applying EXT4 Tweak");
+    ui_print("-> This will change data mode permanently until next partition format");
+		package_extract_file("additions/EXT4Tweak/ext4", "/tmp/ext4");
+		package_extract_file("additions/EXT4Tweak/tune2fs", "/tmp/tune2fs");
+        set_perm(0, 0, 0777, "/tmp/ext4");
+        set_perm(0, 0, 0777, "/tmp/tune2fs");
+        run_program("/tmp/ext4");
+    ui_print("-> EXT4 Tweak Mod Success.");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/rosie.prop","item.0.1") == "1"
+then
+	ui_print("-> Installing Smooth Rosie Mod");
+        package_extract_dir("additions/Rosie/Smooth", "/system");
+    ui_print("-> Smooth Rosie Mod Success.");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/rosie.prop","item.0.2") == "1"
+then
+	ui_print("-> Installing Ultra Smooth Rosie Mod");
+        package_extract_dir("additions/Rosie/Ultra", "/system");
+    ui_print("-> Ultra Smooth Rosie Mod Success.");
+endif;
+
+
+set_progress(0.96);
+    ui_print("");		
+    ui_print("@...Flashing 4EXTRecovery");
+        package_extract_file("additions/Recovery/check_recovery_version", "/tmp/check_recovery_version");
+        set_perm(0, 0, 0777, "/tmp/check_recovery_version");
+	ifelse((less_than_int(run_program("/tmp/check_recovery_version", "1005.3.0"), 1);),(ui_print("  - Flashing new recovery...");
+        package_extract_file("additions/Recovery/recovery.img", "/tmp/recovery.img");
+	    write_raw_image("/tmp/recovery.img", "recovery");),(ui_print("  - Recovery is already up to date");));
+    ui_print("");
+
+	
+#-- Kernel
+    ui_print("@Kernel");
+if
+    file_getprop("/tmp/aroma-data/kernel.prop","selected") == "1"
+then
+	ui_print("@Flashing Stock Kernel");
+# 1.2Ghz
+	ui_print("-- Writing Files & Setting Permissions");
+		assert(package_extract_file("kernels/stock/boot.img", "/tmp/boot.img"),
+		write_raw_image("/tmp/boot.img", "boot"),
+        delete("/tmp/boot.img"));	
+	ui_print("-- Writing Stock Kernel Modules");
+        package_extract_dir("kernels/stock/system", "/system");
+        set_perm_recursive(0, 2000, 0755, 0755, "/system/etc/init.d");
+        set_perm_recursive(0, 2000, 0644, 0644, "/system/etc/thermald.conf");
+        set_perm_recursive(0, 2000, 0644, 0644, "/system/etc/init.qcom.post_boot.sh");
+	ui_print("-> Stock Kernel Successfully flashed.");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/kernel.prop","selected") == "2"
+then
+	ui_print("@Flashing Faux123 Kernel");
+	ui_print("-- Writing Files & Setting Permissions");
+		assert(package_extract_file("kernels/faux/boot.img", "/tmp/boot.img"),
+		write_raw_image("/tmp/boot.img", "boot"),
+        delete("/tmp/boot.img"));	
+	ui_print("-- Writing Stock Kernel Modules");
+        package_extract_dir("kernels/faux/system", "/system");
+        set_perm_recursive(0, 2000, 0755, 0755, "/system/etc/init.d");
+        set_perm_recursive(0, 2000, 0644, 0644, "/system/etc/thermald.conf");
+        set_perm_recursive(0, 2000, 0644, 0644, "/system/etc/init.qcom.post_boot.sh");
+    ui_print("-> Faux123 Kernel Successfully flashed.");
+endif;
+		
+if
+    file_getprop("/tmp/aroma-data/kernel.prop","selected") == "3"
+then
+	ui_print("@Flashing SebastianFM Kernel");
+	ui_print("-- Writing Files & Setting Permissions");
+		assert(package_extract_file("kernels/sebastian/boot.img", "/tmp/boot.img"),
+		write_raw_image("/tmp/boot.img", "boot"),
+        delete("/tmp/boot.img"));	
+    ui_print("-- Writing Stock Kernel Modules");
+        package_extract_dir("kernels/sebastian/system", "/system");
+        set_perm_recursive(0, 2000, 0755, 0755, "/system/etc/init.d");
+        set_perm_recursive(0, 2000, 0644, 0644, "/system/etc/thermald.conf");
+        set_perm_recursive(0, 2000, 0644, 0644, "/system/etc/init.qcom.post_boot.sh");
+	ui_print("-> SebastianFM Kernel Successfully flashed.");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/kernel.prop","selected") == "4"
+then
+    ui_print("@Flashing Bricked Kernel");
+    ui_print("-- Extracting files");
+        package_extract_dir("kernels/bricked/kernel", "/tmp");
+        set_perm(0, 0, 0777, "/tmp/dd");
+        set_perm(0, 0, 0777, "/tmp/modclean.sh");
+        set_perm(0, 0, 0777, "/tmp/mkbootimg.sh");
+        set_perm(0, 0, 0777, "/tmp/cmdline.sh");
+        set_perm(0, 0, 0777, "/tmp/compatibility.sh");
+        set_perm(0, 0, 0777, "/tmp/badass.sh");
+        set_perm(0, 0, 0777, "/tmp/sweep2wake.sh");
+        set_perm(0, 0, 0777, "/tmp/scheduler.sh");
+        set_perm(0, 0, 0777, "/tmp/reboot.sh");
+        set_perm(0, 0, 0777, "/tmp/mkbootimg");
+        set_perm(0, 0, 0777, "/tmp/unpackbootimg");
+
+    ui_print("Deleting Old Modules...");
+        run_program("/sbin/busybox", "mount", "/system");
+        run_program("/tmp/modclean.sh");
+
+    ui_print("Copying New Modules");
+    ui_print("Copying thermald.conf");
+    ui_print("Copying post_boot.sh...");
+    ui_print("Copying ZRAM enabler...");
+    ui_print("Setting permissions...");
+        delete("/system/etc/thermald.conf");
+        package_extract_dir("kernels/bricked/system", "/system");
+        set_perm_recursive(0, 2000, 0755, 0755, "/system/etc/init.d");
+        set_perm_recursive(0, 2000, 0644, 0644, "/system/etc/thermald.conf");
+        set_perm_recursive(0, 2000, 0755, 0755, "/system/etc/init.qcom.post_boot.sh");
+
+if
+    file_getprop("/tmp/aroma-data/zram.prop","selected.0") == "2"
+then
+    ui_print("Deleting ZRAM script...");
+        delete("/system/etc/init.d/90zram");
+endif;
+
+        package_extract_dir("kernels/bricked/modules", "/system/lib/modules");
+
+    ui_print("Running compatibility checks...");
+        run_program("/tmp/compatibility.sh");
+
+if
+    file_getprop("/tmp/aroma-data/gov.prop","selected.0") == "1"
+then
+    ui_print("Setting badass configuration...");
+        run_program("/tmp/badass.sh");
+endif;
+
+    ui_print("Pull the boot.img from your phone...");
+        run_program("/tmp/dd", "if=/dev/block/mmcblk0p20", "of=/tmp/boot.img");;
+
+    ui_print("Extract boot.img...");
+        run_program("/tmp/unpackbootimg", "/tmp/boot.img", "/tmp/");
+
+    ui_print("");
+    ui_print("Searching for this zip on the sdcard...");
+    ui_print("(this may take a few seconds)");
+    ui_print("");
+        run_program("/tmp/cmdline.sh");
+
+if
+    file_getprop("/tmp/aroma-data/sweep.prop","selected.0") == "1"
+then
+    ui_print("Activating sweep2wake...");
+    ui_print("Deactivating HTC screenshot (PWR+HOME)...");
+    ui_print("  (Use AOSP instead: Hold Vol.down+PWR for about a second)");
+endif;
+if
+    file_getprop("/tmp/aroma-data/sweep.prop","selected.0") == "2"
+then
+    ui_print("Activating sweep2wake without button backlight...");
+    ui_print("Deactivating HTC screenshot (PWR+HOME)...");
+    ui_print("  (Use AOSP instead: Hold Vol.down+PWR for about a second)");
+endif;
+if
+    file_getprop("/tmp/aroma-data/sweep.prop","selected.0") == "3"
+then
+    ui_print("Deactivating sweep2wake...");
+endif;
+        run_program("/tmp/sweep2wake.sh");
+        unmount("/system");
+
+    ui_print("Setting chosen scheduler...");
+        run_program("/tmp/scheduler.sh");
+
+    ui_print("Repack boot.img with Bricked &");
+    ui_print("  changing the cmdline of the kernel...");
+    ui_print("Installing kernel...");
+        run_program("/tmp/mkbootimg.sh");
+
+    ui_print("Flashing New boot.img...");
+        assert(write_raw_image("/tmp/newboot.img", "boot"),
+        delete("/tmp/boot.img"));
+	ui_print("-> Bricked Kernel Successfully flashed.");
+endif;
+
+
+run_program("/tmp/aroma/sleep","500");
+
+#-- No Sense Script
+set_progress(0.98);
+if
+    file_getprop("/tmp/aroma-data/nosense.prop","selected") == "1"
+then
+    ui_print("@No-Sense");
+    ui_print(">>> Mounting partitions");
+        run_program("/sbin/mount", "/system");
+        run_program("/sbin/mount", "/data");
+
+    ui_print(">>> Cleaning process");
+        delete_recursive("/data/dalvik-cache");
+        delete("/data/local/bootanimation.zip");
+        delete("/system/customize/resource/downanimation.zip");
+
+    ui_print(">>> Writing Data");
+    ui_print(">>> Writing System");
+        package_extract_dir("additions/NoSense/system", "/system");
+
+    ui_print(">>> Removing HTC Sense UI");
+        delete("/data/app/com.htc.rosiewidgets.note.apk");
+        delete("/system/app/BlackBoard.apk");
+        delete("/system/app/BlueSky.apk");
+        delete("/system/app/Burgundy.apk");
+        delete("/system/app/com.htc.FMRadioWidget.apk");
+        delete("/system/app/com.htc.FriendStreamWidget.apk");
+        delete("/system/app/com.htc.FriendStream3DWidget.apk");
+        delete("/system/app/com.htc.htcmsgwidgets3d.apk");
+        delete("/system/app/com.htc.idlescreen_SN.apk");
+        delete("/system/app/com.htc.MusicWidget.apk");
+        delete("/system/app/com.htc.Sync3DWidget.apk");
+        delete("/system/app/com.htc.StockWidget.apk");
+        delete("/system/app/com.htc.TrendsWidget.apk");
+        delete("/system/app/com.htc.TwitterWidget.apk");
+        delete("/system/app/com.htc.Twitter3DWidget.apk");
+        delete("/system/app/com.htc.WeatherWidget.apk");
+        delete("/system/app/DCSImpl.apk");
+        delete("/system/app/DCSStock.apk");
+        delete("/system/app/EReaderWidget.apk");
+        delete("/system/app/HtcAddProgramWidget.apk");
+        delete("/system/app/HtcAutoRotateWidget.apk");
+        delete("/system/app/HtcBackgroundDataWidget.apk");
+        delete("/system/app/htcbookmarkwidget.apk");
+        delete("/system/app/htcbookmarkwidget3d.apk");
+        delete("/system/app/HtcCalculatorWidget.apk");
+        delete("/system/app/htccalendarwidgets.apk");
+        delete("/system/app/htccalendarwidgets3d.apk");
+        delete("/system/app/HtcClockWidget.apk");
+        delete("/system/app/HtcClock3DWidget.apk");
+        delete("/system/app/htccontactwidgets.apk");
+        delete("/system/app/htccontactwidgets3D.apk");
+        delete("/system/app/HtcCopyright.apk");
+        delete("/system/app/HtcDataRoamingWidget.apk");
+        delete("/system/app/HtcDataStripWidget.apk");
+        delete("/system/app/HtcDirect.apk");
+        delete("/system/app/HtcDirectDownloadsProvider.apk");
+        delete("/system/app/HtcFeedback.apk");
+        delete("/system/app/HtcGreaderWidget.apk");
+        delete("/system/app/HtcLaputaWidget.apk");
+        delete("/system/app/HtcLocationService.apk");
+        delete("/system/app/HtcLocationsWidget3d.apk");
+        delete("/system/app/HtcLocationsWidgetSettings3d.apk");
+        delete("/system/app/HtcLockScreen.apk");
+        delete("/system/app/htcmailwidgets.apk");
+        delete("/system/app/htcmailwidgets3d.apk");
+        delete("/system/app/htcmsgwidgets.apk");
+        delete("/system/app/HtcNavigateWidget3d.apk");
+        delete("/system/app/HtcPhotoGridWidget3D.apk");
+        delete("/system/app/HtcPhotoWidget.apk");
+        delete("/system/app/HtcPowerStripWidget.apk");
+        delete("/system/app/HtcProfileWidget.apk");
+        delete("/system/app/HtcRecommends.apk");
+        delete("/system/app/HtcRecommendsWidget.apk");
+        delete("/system/app/HtcRingtoneWidget.apk");
+        delete("/system/app/HtcScreenBrightnessWidget.apk");
+        delete("/system/app/HtcScreenTimeoutWidget.apk");
+        delete("/system/app/htcsettingwidgets.apk");
+        delete("/system/app/HtcSyncwidget.apk");
+        delete("/system/app/htcwatchwidget3d.apk");
+        delete("/system/app/HtcWeather3DWidget.apk");
+        delete("/system/app/Idlescreen_Base.apk");
+        delete("/system/app/idlescreen_photo.apk");
+        delete("/system/app/idlescreen_shortcut.apk");
+        delete("/system/app/IdleScreen_Stock.apk");
+        delete("/system/app/IdleScreen_Weather.apk");
+        delete("/system/app/MyHTC.apk");
+        delete("/system/app/Metal.apk");
+        delete("/system/app/MyReportAgent.apk");
+        delete("/system/app/Rosie.apk");
+        delete("/system/app/ShowMeWidget.apk");
+        delete("/system/app/SkinPicker.apk");
+        delete("/system/app/Slate.apk");
+        delete("/system/app/Stock.apk");
+        delete("/system/app/TripWidget3D.apk");
+        delete("/system/app/Wood.apk");
+
+        delete_recursive("/system/etc/clockwidget");
+        delete_recursive("/system/etc/fakeserverxml");
+
+# HTC Sensation specyfic files
+        delete("/system/customize/resource/scenes_picker_01.png");
+        delete("/system/customize/resource/scenes_picker_02.png");
+        delete("/system/customize/resource/scenes_picker_03.png");
+        delete("/system/customize/resource/scenes_picker_04.png");
+        delete("/system/customize/resource/scenes_picker_05.png");
+        delete("/system/customize/resource/scenes_picker_list_01.png");
+        delete("/system/customize/resource/scenes_picker_list_02.png");
+        delete("/system/customize/resource/scenes_picker_list_03.png");
+        delete("/system/customize/resource/scenes_picker_list_04.png");
+        delete("/system/customize/resource/scenes_picker_list_05.png");
+
+
+# Not to remove
+#delete("/system/app/DCSUtility.apk");
+#delete("/system/app/FriendStream.apk");
+#delete("/system/app/HtcWeatherWallpaper.apk");
+
+
+    ui_print(">>> Unmounting partitions");
+        run_program("/sbin/umount", "/system");
+        run_program("/sbin/umount", "/data");
+	ui_print("HTC Sense UI removed succesfully");
+endif;
+
+set_progress(0.99);
+		unmount("/system");
+	ui_print("-> Cleaning up");
+	ui_print("-> Deleting Dalvik-Cache");
+        delete_recursive("/data/dalvik-cache");	
+		unmount("/data");
+	ui_print("-> Formatting Cache");
+		unmount("/cache");
+		format("ext4", "EMMC", "/dev/block/mmcblk0p24");
+set_progress(1.0);
+	ui_print("===============================================");
+	ui_print("|        New ROM flashed successfully!        |");
+	ui_print("| Reboot your device or flash no-Sense script |");
+	ui_print("|  Remember to share your experience on XDA   |");
+	ui_print("===============================================");
+	ui_print("|    Every Donation is Greatly Appreciated !  |");
+	ui_print("===============================================");
+        run_program("/sbin/busybox", "cp", "/tmp/recovery.log", "/sdcard/recovery.log");
+        run_program("/sbin/sleep", "5");
+	ui_print("-> Done.");  
