@@ -71,18 +71,33 @@ set_progress(0.06);
         run_program("/sbin/busybox", "cp", "/tmp/recovery.log", "/sdcard/superwipe.log");
 endif;
 
+if
+    file_getprop("/tmp/aroma-data/wipe.prop","selected.0") == "1"
+then
+    ui_print(">>> Formatting partitions");
+	    assert(unmount("/system") || ui_print("(system is unmounted already)"));
+	    format("ext4", "EMMC", "/dev/block/mmcblk0p22");
+	    assert(unmount("/cache") || ui_print("(cache is unmounted already)"));
+	    format("ext4", "EMMC", "/dev/block/mmcblk0p24");
+    ui_print("");
+    ui_print(">>> Mounting partitions");
+	    assert(mount("ext4", "EMMC", "/dev/block/mmcblk0p22", "/system") || ui_print("(system is mounted already)"));
+	    assert(mount("ext4", "EMMC", "/dev/block/mmcblk0p23", "/data") || ui_print("(data is mounted already)"));
+    ui_print("");
+    ui_print(">>> Cleaning process");
+	    delete("/data/.battery-calibrated");
+	    delete_recursive("/data/dalvik-cache");
+	    delete_recursive("/data/resource-cache");
+endif;
+
 set_progress(0.07);
-show_progress(0.07, 9);
+show_progress(0.07, 13);
     ui_print("-> Writing Data");
         mount("ext4", "EMMC", "/dev/block/mmcblk0p23", "/data");
         package_extract_dir("data", "/data");
 
-    ui_print("-> Writing sdcard apps");
-        package_extract_dir("sdcard", "/sdcard");
-
 set_progress(0.08);
-show_progress(0.7,1380);
-        format("ext4", "EMMC", "/dev/block/mmcblk0p22");
+show_progress(0.7, 986);
     ui_print("-> Writing System");
         mount("ext4", "EMMC", "/dev/block/mmcblk0p22", "/system");
         package_extract_dir("system", "/system");
@@ -331,7 +346,6 @@ then
 		package_extract_dir("additions/WakeOnVol/system", "/system");
     ui_print("-> Wake on volume Mod Success.");
 endif;
-
 if
     file_getprop("/tmp/aroma-data/mods.prop","item.0.7") == "1"
 then
@@ -344,23 +358,28 @@ then
         run_program("/tmp/ext4");
     ui_print("-> EXT4 Tweak Mod Success.");
 endif;
+if
+    file_getprop("/tmp/aroma-data/rosie.prop","selected.0") == "1"
+then
+	ui_print("-> Installing Default Rosie");
+endif;
 
 if
-    file_getprop("/tmp/aroma-data/rosie.prop","item.0.1") == "1"
+    file_getprop("/tmp/aroma-data/rosie.prop","selected.0") == "2"
 then
+
 	ui_print("-> Installing Smooth Rosie Mod");
         package_extract_dir("additions/Rosie/Smooth", "/system");
     ui_print("-> Smooth Rosie Mod Success.");
 endif;
 
 if
-    file_getprop("/tmp/aroma-data/rosie.prop","item.0.2") == "1"
+    file_getprop("/tmp/aroma-data/rosie.prop","selected.0") == "3"
 then
 	ui_print("-> Installing Ultra Smooth Rosie Mod");
         package_extract_dir("additions/Rosie/Ultra", "/system");
     ui_print("-> Ultra Smooth Rosie Mod Success.");
 endif;
-
 
 set_progress(0.96);
     ui_print("");		
@@ -371,7 +390,6 @@ set_progress(0.96);
         package_extract_file("additions/Recovery/recovery.img", "/tmp/recovery.img");
 	    write_raw_image("/tmp/recovery.img", "recovery");),(ui_print("  - Recovery is already up to date");));
     ui_print("");
-
 	
 #-- Kernel
     ui_print("@Kernel");
@@ -391,7 +409,6 @@ then
         set_perm_recursive(0, 2000, 0644, 0644, "/system/etc/init.qcom.post_boot.sh");
 	ui_print("-> Stock Kernel Successfully flashed.");
 endif;
-
 if
     file_getprop("/tmp/aroma-data/kernel.prop","selected") == "2"
 then
