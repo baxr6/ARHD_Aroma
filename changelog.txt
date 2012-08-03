@@ -1,0 +1,13 @@
+ARHD Aroma Installer Script v1.0
+
+Added Bricked kernel 3.0 v1.4
+Added Jelly Bean Animations
+Added optional full wipe (superwipe script)
+Added HQ Camera Mod
+Added Sony Bravia Engine Mod
+Added Battery Percentage Mod & Fix
+Added Wake On Volume Mod
+Added ARHD EXT4 Tweaks Mod
+Added Default/Smooth/Ultra Smooth Rosie Mod
+Added NoSense script
+Cleaned up code
