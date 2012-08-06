@@ -1,5 +1,5 @@
 ﻿ini_set("rom_name", "Android Revolution HD");
-ini_set("rom_version", "6.7.1 XE");
+ini_set("rom_version", "6.7.2 XE");
 ini_set("rom_author", "mike1986");
 ini_set("rom_device", "HTC Sensation/XE");
 
@@ -27,22 +27,11 @@ viewbox(
 
 textbox(
   "Changelog",
-  "ARHD 6.7.12 XE Changelog",
+  "ARHD 6.7.2 XE Changelog",
   "icons/info",
   
   resread("changelog.txt")
 );
-
-
-agreebox(
-  "Terms Of Use",
-  "Please read the Terms of Use ...",
-  "icons/agreement",
-  readfile_aroma("agreement.txt"),
-  "I agree with this Terms Of Use...",
-  "Please check the agreement..."
-);
-
 
 selectbox(
   "Do you want to perform a full wipe?",
@@ -67,9 +56,53 @@ checkbox(
   "Jelly Beans Animations","",0,
   "Battery Percentage Mod & Fix","",0,
   "Wake On Volume Mod","",0,
-  "ARHD EXT4 Tweaks","",0
+  "ARHD EXT4 Tweaks","",0,
+  "Finer/Finest Volume Control","",0
 );
 
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.5") == "1"
+then
+menubox(
+  "Battery Mod",
+  "Please Select which battery mod:",
+  "icons/apps",
+  "batterymod.prop",
+  
+  "Circle",  "", "icons/circle",
+  "Smooth Circle",  "", "icons/smooth_circle",
+  "Green Stock",  "", "icons/green_stock",
+  "Big Stock",  "", "icons/big_stock",
+  "Hoolm",  "", "icons/hoolm",
+  "Smooth Grey",  "", "icons/smooth_grey",
+  "Stock Colour",  "", "icons/stock_colour",
+  "Vertical",  "", "icons/vertical",
+  "Android",  "", "icons/android",
+  "Blue",  "", "icons/blue",
+  "Glowing",  "", "icons/glowing",
+  "Honeycomb",  "", "icons/honeycomb",
+  "White Honeycomb",  "", "icons/white_honeycomb",
+  "Android Too",  "", "icons/android_too",
+  "Digital",  "", "icons/digital",
+  "Revolution",  "", "icons/revolution",
+  "Skull",  "", "icons/skull",
+  "Tiny",  "", "icons/tiny"
+ );
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.6") == "1"
+then
+selectbox(
+  "Volume Control Mod",
+  "Please Select which volume mod:",
+  "icons/apps",
+  "volumemod.prop",
+  
+  "Finer Volume Control","",0,
+  "Finest Volume Control","",0
+ );
+endif;
 
 selectbox(
   "Other Mods",
@@ -81,8 +114,6 @@ selectbox(
   "Smooth Rosie Mod","",0,
   "Ultra Smooth Rosie Mod","",0
 );
-
-
 
 menubox(
   "Kernel Installation Choise",

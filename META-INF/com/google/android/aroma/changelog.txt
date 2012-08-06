@@ -1,19 +1,14 @@
 <b>ARHD - 6.7.1 XE</b>
 
-<*>Updated faux kernel to 8b008</*>
-<*>Updated SebastianFM kernel to 1.5.0</*>
-<*>Fixed amr wideband not being enabled</*>
-<*>Added Jelly Bean Animations to recovery installer</*>
-<*>Zip-aligned using newest SDK r20</*>
-<*>SuperSu updated to latest 0.94</*>
-<*>Dropbox updated to latest 2.1.7</*>
-<*>Maxthon updated to latest 2.6.9</*>
-<*>Facebook updated to latest 1.9.7</*>
-<*>Adobe Flash Player updated to latest 11.1.115.12</*>
-<*>Adobe Reader updated to latest 10.3.0</*>
-<*>ES File Explorer updated to latest 1.6.1.7</*>
-<*>Google Plus updated to latest 3.0.1.32017166</*>
-<*>Twitter updated to latest 3.3.1</*>
+Updated faux kernel to 8b009</*>
+<*>Faux kernel updated to latest 8b9</*>
+<*>Fixed 4EXT Recovery flashing</*>
+<*>Fixed some important tweaks scripts</*>
+<*>4EXT Recovery updated to latest 1005.5.0</*>
+<*>Adobe Reader updated to latest 10.3.1</*>
+<*>Google Play updated to latest 3.7.15</*>
+<*>DropBox updated to latest 2.1.8</*>
+<*>YouTube updated to latest 4.0.23</*>
 <*>Other minor changes and fixes</*>
 
 <b>ARHD Aroma Installer Script v1.0</b>
@@ -29,3 +24,4 @@
 <*>Added Smooth/Ultra Smooth Rosie Mod</*>
 <*>Added NoSense script</*>
 <*>Cleaned up code</*>
+<*>updater script updated for recovery version 1005.5.0</*>

@@ -331,10 +331,175 @@ if
 then
 	ui_print("-> Installing Battery Percentage Mod & Fix");
         delete("/system/framework/framework-res.apk"); 
-        package_extract_dir("additions/BatteryMod/framework", "/system/framework"); 
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "1"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
         delete("/system/app/SystemUI.apk"); 
-        package_extract_dir("additions/BatteryMod/app", "/system/app"); 
-    ui_print("-> Battery Percentage Mod Success.");
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "2"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "3"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "4"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "5"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "6"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "7"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "8"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "9"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "10"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "11"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "12"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "13"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "14"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "15"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "16"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "17"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
+ 
+
+
+if
+    file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "18"
+then
+        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+endif;
 endif;
 
 if
@@ -345,6 +510,30 @@ then
         delete("/system/framework/android.policy.jar"); 
 		package_extract_dir("additions/WakeOnVol/system", "/system");
     ui_print("-> Wake on volume Mod Success.");
+endif;
+
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.7") == "1"
+then
+	
+if
+    file_getprop("/tmp/aroma-data/volumemod.prop","selected.0") == "1"
+then
+    ui_print("-> Installing Fine Volume Mod");
+        package_extract_dir("additions/VolControl/finer/xe/system", "/system"); 
+endif;
+    ui_print("-> Finer Volume Control Mod Success.");
+
+
+
+if
+    file_getprop("/tmp/aroma-data/volumemod.prop","selected.0") == "2"
+then
+    ui_print("-> Installing Finest Volume Mod");
+        package_extract_dir("additions/VolControl/finest/xe/system", "/system"); 
+        delete("/system/app/SystemUI.apk"); 
+        package_extract_dir("additions/BatteryMod/app", "/system/app"); 
+endif;
 endif;
 if
     file_getprop("/tmp/aroma-data/mods.prop","item.0.7") == "1"
@@ -386,7 +575,7 @@ set_progress(0.96);
     ui_print("@...Flashing 4EXTRecovery");
         package_extract_file("additions/Recovery/check_recovery_version", "/tmp/check_recovery_version");
         set_perm(0, 0, 0777, "/tmp/check_recovery_version");
-	ifelse((less_than_int(run_program("/tmp/check_recovery_version", "1005.3.0"), 1);),(ui_print("  - Flashing new recovery...");
+	ifelse((less_than_int(run_program("/tmp/check_recovery_version", "1005.5.0"), 1);),(ui_print("  - Flashing new recovery...");
         package_extract_file("additions/Recovery/recovery.img", "/tmp/recovery.img");
 	    write_raw_image("/tmp/recovery.img", "recovery");),(ui_print("  - Recovery is already up to date");));
     ui_print("");
