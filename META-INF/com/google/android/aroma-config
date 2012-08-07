@@ -18,8 +18,8 @@ viewbox(
     "You're about to flash\n"+
     ini_get("rom_name") + " by " + ini_get("rom_author") +  
     "\n\n\n"+
-    "  Version: <#080>" + ini_get("rom_version") + "</#>\n"+
-    "  Device: <#080>" + ini_get("rom_device") + "</#>\n\n\n"+
+    "  Version: " + ini_get("rom_version") + "\n"+
+    "  Device: " + ini_get("rom_device") + "\n\n\n"+
     "Press Next to continue the installation...",
     "icons/info"
 );
@@ -33,14 +33,22 @@ textbox(
   resread("changelog.txt")
 );
 
+textbox(
+  "Credits",
+  "Android Revolution HD Credits",
+  "icons/info",
+  
+  resread("credits.txt")
+);
+
 selectbox(
   "Do you want to perform a full wipe?",
   "Please Select:",
   "icons/apps",
   "wipe.prop",
   
-  "Install w/out wiping","",1,
-  "Perform a full wipe","",0
+  "Upgrade","",1,
+  "Superwipe","",0
 );
 
 
@@ -91,7 +99,7 @@ menubox(
 endif;
 
 if
-    file_getprop("/tmp/aroma-data/mods.prop","item.0.6") == "1"
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.8") == "1"
 then
 selectbox(
   "Volume Control Mod",

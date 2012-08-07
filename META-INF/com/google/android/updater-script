@@ -310,21 +310,6 @@ then
     ui_print("-> Sony Bravia Mod Success.");
 endif;
 
-if
-    file_getprop("/tmp/aroma-data/mods.prop","item.0.4") == "1"
-then
-	ui_print("-> Installing Jelly Beans Animations");
-	    assert(mount("ext4", "EMMC", "/dev/block/mmcblk0p22", "/system") || ui_print("(system is mounted already)"));
-        package_extract_dir("additions/Anims/vrtheme", "/sdcard/vrtheme");
-        set_perm(0, 0, 0755, "/sdcard/vrtheme/installtheme.sh");
-        set_perm(0, 0, 0755, "/sdcard/vrtheme/zip");
-        set_perm(0, 0, 0755, "/sdcard/vrtheme/cleanup.sh");
-        set_perm(0, 0, 0755, "/sdcard/vrtheme/zipalign");
-        run_program("/sdcard/vrtheme/installtheme.sh");
-        run_program("/sdcard/vrtheme/cleanup.sh");
-        package_extract_dir("additions/Anims/system", "/system");
-    ui_print("-> JellyBean Animations Mod Success.");
-endif;
 
 if
     file_getprop("/tmp/aroma-data/mods.prop","item.0.5") == "1"
@@ -345,9 +330,7 @@ endif;
 if
     file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "2"
 then
-        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
-        delete("/system/app/SystemUI.apk"); 
-        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+        package_extract_dir("additions/BatteryMod/smooth_circle/framework", "/system/framework"); 
 endif;
  
 
@@ -355,54 +338,42 @@ endif;
 if
     file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "3"
 then
-        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
-        delete("/system/app/SystemUI.apk"); 
-        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+        package_extract_dir("additions/BatteryMod/green_stock/framework", "/system/framework"); 
 endif;
  
 
 if
     file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "4"
 then
-        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
-        delete("/system/app/SystemUI.apk"); 
-        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+        package_extract_dir("additions/BatteryMod/big_stock/framework", "/system/framework"); 
 endif;
  
 
 if
     file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "5"
 then
-        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
-        delete("/system/app/SystemUI.apk"); 
-        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+        package_extract_dir("additions/BatteryMod/hoolm/framework", "/system/framework"); 
 endif;
  
 
 if
     file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "6"
 then
-        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
-        delete("/system/app/SystemUI.apk"); 
-        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+        package_extract_dir("additions/BatteryMod/smooth_grey/framework", "/system/framework"); 
 endif;
  
 
 if
     file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "7"
 then
-        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
-        delete("/system/app/SystemUI.apk"); 
-        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+        package_extract_dir("additions/BatteryMod/stock_colour/framework", "/system/framework"); 
 endif;
  
 
 if
     file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "8"
 then
-        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
-        delete("/system/app/SystemUI.apk"); 
-        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+        package_extract_dir("additions/BatteryMod/vertical/framework", "/system/framework"); 
 endif;
  
 
@@ -410,9 +381,7 @@ endif;
 if
     file_getprop("/tmp/aroma-data/batterymod.prop","selected.0") == "9"
 then
-        package_extract_dir("additions/BatteryMod/circle/framework", "/system/framework"); 
-        delete("/system/app/SystemUI.apk"); 
-        package_extract_dir("additions/BatteryMod/circle/app", "/system/app"); 
+        package_extract_dir("additions/BatteryMod/android_too/framework", "/system/framework"); 
 endif;
  
 
@@ -531,10 +500,26 @@ if
 then
     ui_print("-> Installing Finest Volume Mod");
         package_extract_dir("additions/VolControl/finest/xe/system", "/system"); 
-        delete("/system/app/SystemUI.apk"); 
-        package_extract_dir("additions/BatteryMod/app", "/system/app"); 
 endif;
 endif;
+
+if
+    file_getprop("/tmp/aroma-data/mods.prop","item.0.4") == "1"
+then
+	ui_print("-> Installing Jelly Beans Animations");
+	    assert(mount("ext4", "EMMC", "/dev/block/mmcblk0p22", "/system") || ui_print("(system is mounted already)"));
+        package_extract_dir("additions/Anims/vrtheme", "/sdcard/vrtheme");
+        set_perm(0, 0, 0755, "/sdcard/vrtheme/installtheme.sh");
+        set_perm(0, 0, 0755, "/sdcard/vrtheme/zip");
+        set_perm(0, 0, 0755, "/sdcard/vrtheme/cleanup.sh");
+        set_perm(0, 0, 0755, "/sdcard/vrtheme/zipalign");
+        run_program("/sdcard/vrtheme/installtheme.sh");
+
+        package_extract_dir("additions/Anims/system", "/system");
+    ui_print("-> JellyBean Animations Mod Success.");
+endif;
+
+
 if
     file_getprop("/tmp/aroma-data/mods.prop","item.0.7") == "1"
 then

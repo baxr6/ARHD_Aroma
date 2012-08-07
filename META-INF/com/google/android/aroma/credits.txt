@@ -1,0 +1,29 @@
+<b> -- Android Revolution HD Team: -- </b>
+
+<*> mike1986 (ROM Creator & Team Founder)</*>
+<*> Bumble-Bee aka Apache14 (Kernels Developer)</*>
+<*> Euphorie (Homepage Administrator)</*>
+<*> faux123 (Kernels Developer)</*>
+<*> jkoljo (Beta-tester & unlocking Android devices expert)</*>
+<*> jotha (Threads support, mods developer)</*>
+<*> KID_1194 (Graphic Design)</*>
+<*> Lizard (Files Hosting)</*>
+<*> lukogriffioen (Mods & Homepage Developer)</*>
+<*> madmaxx82 (4EXT Recovery Developer)</*>
+<*> MarcoHD (Files Hosting)</*>
+<*> Mavy170 (Files Hosting)</*>
+<*> Patrics83 (ROM Cleaner Developer)</*>
+
+<b> -- Special thanks to: -- </b>
+
+<*> Whiskey103 for his contribution, who decided to concentrate on Moderating to further help the community</*>
+<*> Retired Team Members: Dude360, seandk, TWioE, Moe|Joe, jonata, kill4l, MultiCulti</*>
+<*> Server space donors: Mavy170, MarcoHD, Lizard, hoosbude, vinas1, target5</*>
+<*> Kernels developers: faux123, klquicksall, Apache14, SebastianFM, guevor, franciscofranco, chad.goodman</*>
+<*> Graphics designers: KID_1194, Krzysiec, adsamcik, erikstar, simplytheone, adamgaltress</*>
+<*> dsixda for his Android Kitchen</*>
+<*> brut.all & iBotPeaches for their work on apktool</*>
+<*> JesusFreak for his work on smali/baksmali</*>
+<*> xda-developers for giving us a place to share</*>
+<*> Everyone who made a donation</*>
+<*> And M_T_M for being an amazing Mod ;)</*>
